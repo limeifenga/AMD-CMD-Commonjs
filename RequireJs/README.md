@@ -1,0 +1,65 @@
+# AMD-CMD-Commonjs
+AMD/CMD/Commonjs 探究
+
+
+
+前端模块规范  在以下环境中使用
+
+1、浏览器端
+1.1 AMD (异步模块规范)  RequireJs
+
+
+1.1.1
+requirejs.config({})  是对当前页面入口进行配置
+@param
+baseUrl {string}  配置一个基路径，
+paths   {object}  如： name:‘/lib/jquery’  （基于基路径）
+shim    {object}  从非模块的JS中，导出模块
+    如：
+    shim: {
+        jquery: {
+            deps: [], // 需要加载的依赖
+            exports: 'jQuery'
+        }
+    }
+map {object}    如目的实现在不同模块实现不同的jquery版本
+    如：
+     map: {
+            'app/a': {
+                'jquery': 'RequireJS/lib/jquery-1.7.1.js'
+            },
+            'app/b': {
+                'jquery': 'RequireJS/lib/jquery-1.8.0.min.js'
+            }
+     }
+
+
+1.1.2
+define([],() => {})   是AMD规范用来声明模块的接口
+@param
+{array}    当前模块的依赖。  可选
+{function} 此模块的执行体。  必选
+
+
+
+1.1.3
+requirejs([],() => {})
+
+
+细节：
+1、requireJS 加载文件/模块 都是相对于baseUrl
+2、baseUrl默认使用data-main属性指定的脚本目录
+3、如果没有data-main属性，那么baseUrl等于该html所在的目录
+4、baseUrl可以通过requirejs.config() 中进行设置
+5、优先级 config> data-main > html目录
+6、requireJS加载JS时，可以不写js后缀
+7、加载文件/模块时，会自动包含前缀http或者https
+8、可以在config中使用paths配置，指定相对目录
+9、data-main指定的文件，是requirejs的入口点
+
+
+
+
+
+
+
